@@ -15,7 +15,6 @@
   /* ---------- Header ---------- */
   document.title = SITE.name;
   $("#name").textContent = SITE.name;
-  $("#tagline").textContent = SITE.tagline;
   if (SITE.photo) $("#portrait").src = SITE.photo; else $("#portrait").remove();
   SITE.status.forEach((s) => $("#status").append(el("li", { text: s })));
 
