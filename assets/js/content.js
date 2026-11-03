@@ -16,7 +16,7 @@ const SITE = {
     email: "harivarshan18@gmail.com",
     github: "https://github.com/harivarshan18",
     linkedin: "https://www.linkedin.com/in/hari-varshan-d",
-    scholar: "", // add your Google Scholar URL once you have a profile
+    scholar: "https://scholar.google.com/citations?user=c0R_YdsAAAAJ&hl=en&authuser=1", 
     orcid: "",
     cv: "assets/cv.pdf",
   },
