@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notes</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <main class="wrap post-page" id="main">
+    <a class="back" href="./#notes">Back to all notes</a>
+    <h1 id="post-title"></h1>
+    <p class="meta" id="post-date"></p>
+    <article class="post-body prose" id="post-body"></article>
+  </main>
+
+  <script src="assets/js/content.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script>
+    (async function () {
+      const slug = new URLSearchParams(location.search).get("p");
+      const meta = SITE.posts.find((p) => p.slug === slug);
+      const title = document.getElementById("post-title");
+      const body = document.getElementById("post-body");
+      if (!meta) {
+        title.textContent = "Note not found";
+        body.innerHTML = '<p>This note does not exist or has moved. <a href="./#notes">See all notes</a>.</p>';
+        return;
+      }
+      document.title = meta.title + " | " + SITE.name;
+      title.textContent = meta.title;
+      document.getElementById("post-date").textContent =
+        new Date(meta.date + "T12:00:00").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+      try {
+        const res = await fetch("posts/" + encodeURIComponent(slug) + ".md");
+        if (!res.ok) throw new Error(res.status);
+        body.innerHTML = marked.parse(await res.text());
+        // Math: $inline$ and $$display$$
+        renderMathInElement(body, {
+          delimiters: [{ left: "$$", right: "$$", display: true }, { left: "$", right: "$", display: false }],
+          throwOnError: false,
+        });
+      } catch (e) {
+        body.innerHTML = "<p>Could not load posts/" + slug + ".md. Check that the file exists and the slug in content.js matches its name.</p>";
+      }
+    })();
+  </script>
+</body>
+</html>
