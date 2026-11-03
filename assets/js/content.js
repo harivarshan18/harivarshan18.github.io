@@ -1,185 +1,190 @@
 /*
   All site content lives here. Edit this file to update the website;
   you should not need to touch the HTML or CSS.
-
-  Lines marked TODO are placeholders for you to check or replace.
   Empty strings ("") hide a link or field.
 */
 
 const SITE = {
   name: "Hari Varshan",
-  // One plain sentence: what you work on and why it matters.
+  photo: "assets/img/hari.jpg",
   tagline:
-    "I build machine learning methods for medical images and wearable signals, " +
-    "with a focus on models that still work when the scanner, device, or site changes.",
-  // Short status lines shown under the name.
+    "I develop foundation and generative models for medical imaging and physiological " +
+    "time series, aimed at early detection and precision health.",
   status: [
-    "M.S. Computer Science and Engineering, University of Michigan", // TODO: update when you start your PhD
-    "HPC Research Intern, NERSC, Lawrence Berkeley National Laboratory",
+    "Ph.D. student in Computer Science, Arizona State University",
+    "Graduate Research Associate, Wu Lab, ASU–Mayo Center for Innovative Imaging",
   ],
 
   links: {
-    email: "", // TODO: e.g. "you@umich.edu"
+    email: "harivarshan18@gmail.com",
     github: "https://github.com/harivarshan18",
-    scholar: "", // TODO: Google Scholar profile URL
-    linkedin: "", // TODO
-    orcid: "", // TODO
-    cv: "assets/cv.pdf", // TODO: upload your CV to assets/cv.pdf, or set to "" to hide
+    linkedin: "https://www.linkedin.com/in/hari-varshan-d",
+    scholar: "", // add your Google Scholar URL once you have a profile
+    orcid: "",
+    cv: "assets/cv.pdf",
   },
 
   about: [
-    "My research sits between medical imaging, machine learning, and biomedical signal processing. " +
-      "A recurring question in my work is harmonization: how to learn representations that stay reliable " +
-      "across scanners, devices, cohorts, and recording conditions.",
-    "I have worked on PET image harmonization, thyroid nodule classification from CT, flow matching on " +
-      "foundation model embeddings, and health classification from wearable and driving sensor data. " +
-      "At NERSC I work on high-performance computing for quantum chemistry.",
-    "Outside research I teach as a Graduate Student Instructor at the University of Michigan.",
+    "I am a Ph.D. student in Computer Science at Arizona State University, advised by Dr. Teresa Wu " +
+      "in the Wu Lab at the ASU–Mayo Center for Innovative Imaging. I earned an M.S. in Computer Science " +
+      "en route, and B.S. degrees in Computer Science and Mathematics from ASU with Barrett, The Honors College.",
+    "My research adapts foundation models and generative models to clinical data: 3D medical images, " +
+      "radiology reports, and physiological signals from wearables and in-vehicle sensors. I work on " +
+      "harmonizing data across scanners and tracers, multimodal risk prediction, and early detection " +
+      "of conditions such as mild cognitive impairment.",
+    "Application areas include neuroimaging, computational oncology, and wearable health. " +
+      "I train models at scale with multi-GPU distributed training on SLURM clusters.",
   ],
 
   // Themes are used by the filter buttons in the Research section.
   themes: {
     imaging: "Medical imaging",
-    signals: "Wearables and signals",
-    representation: "Representation learning",
-    hpc: "HPC and quantum",
+    timeseries: "Physiological time series",
+    multimodal: "Multimodal learning",
+    generative: "Generative models",
   },
 
-  // Research projects. Keep summaries to 1–2 sentences; put detail in "details".
   projects: [
     {
-      title: "Harmonizing PET images across scanners",
-      themes: ["imaging", "representation"],
+      title: "Unpaired generative learning for amyloid PET harmonization",
+      themes: ["imaging", "generative"],
       status: "Manuscript in preparation",
       summary:
-        "CycleGAN variants, including a flow-matching CycleGAN (FM-Cycle-GAN), that map PET images " +
-        "between scanner domains while preserving clinically relevant measurements.",
+        "A Feature-Mapping CycleGAN (FM-CycleGAN) that harmonizes regional amyloid PET measurements " +
+        "between PiB and FBP tracers, without needing paired scans for training.",
+      result: "Inter-tracer mcSUVR correlation improved from R = 0.922 to R = 0.963 (p < 0.001) on an independent paired test cohort.",
       details:
-        "Evaluation uses paired statistical tests and correlation comparisons (Steiger's Z-test) to check " +
-        "that harmonized images agree with the target domain without distorting quantitative values.",
+        "Trained on 5,433 unpaired PET scans from multiple neuroimaging cohorts, using residual MLP generators " +
+        "with adversarial, cycle-consistency, and identity losses.",
       links: [],
     },
     {
-      title: "Thyroid nodule classification from CT",
-      themes: ["imaging"],
+      title: "Multimodal deep learning for incidental thyroid nodule risk stratification",
+      themes: ["imaging", "multimodal"],
       status: "Manuscript in preparation",
       summary:
-        "Benign versus malignant classification of thyroid nodules from CT, comparing 2D slice models " +
-        "with a 3D pipeline built on DINOv2 features.",
+        "2D, 3D, and multimodal models that classify incidental thyroid nodules as benign or malignant " +
+        "from CT images and radiology-report text in a 454-patient clinical cohort.",
+      result: "0.768 AUC with image-text fusion on a 91-patient internal holdout cohort, outperforming image-only and volumetric models.",
       details:
-        "The 3D pipeline uses masked, cropped nodule regions and a three-window CT input (soft tissue, " +
-        "calcification, wide range). Evaluation is grouped by patient to avoid leakage between folds.",
+        "Fine-tuned BioMedCLIP vision and text encoders and compared them with 2D ResNet and U-Net models and " +
+        "MONAI 3D architectures, using patient-level 5-fold cross-validation and held-out evaluation.",
       links: [],
     },
     {
-      title: "Flow matching on foundation model embeddings",
-      themes: ["representation", "imaging"],
+      title: "Foundation models for cognitive impairment detection from naturalistic driving",
+      themes: ["timeseries"],
       status: "Ongoing",
       summary:
-        "Controlled experiments on how flow matching reshapes DINOv2 embedding spaces, from synthetic " +
-        "data to MRI from the ADNI Alzheimer's cohort.",
+        "Detecting mild cognitive impairment (MCI) from accelerometer and gyroscope signals recorded while " +
+        "19 older adults drove in everyday conditions.",
+      result: "Frozen MOMENT embeddings improved from 0.51 AUROC on trip-level windows to 0.64 on turn-level segments and 0.79 on right turns.",
       details:
-        "Noise is calibrated by signal-to-noise ratio, and changes to the embedding space are measured " +
-        "with shape summaries such as effective rank and participation ratio, with bootstrap inference.",
+        "Foundation-model embeddings carried strong driver-specific structure, so evaluation uses leave-pair-out " +
+        "splits with permutation testing to prevent subject leakage. High-frequency (24 Hz) maneuver-level " +
+        "segments appear to keep MCI-related signal that coarse trip-level aggregation loses.",
       links: [],
     },
     {
-      title: "Migraine subtype classification from Fitbit heart rate",
-      themes: ["signals"],
+      title: "Wearable time-series foundation models for migraine subtyping",
+      themes: ["timeseries"],
       status: "Ongoing",
       summary:
-        "Chronic versus episodic migraine classification from minute-level Fitbit heart rate in the " +
-        "All of Us Research Program, comparing summary statistics with time-series foundation model embeddings.",
-      details: "",
+        "Classifying chronic versus episodic migraine from minute-level Fitbit heart rate for 1,158 " +
+        "participants in the All of Us Research Program.",
+      result: "",
+      details:
+        "The pipeline detects device artifacts, resamples irregular readings onto a minute-level grid, and builds " +
+        "20-day windows. Time-series foundation-model embeddings are compared with statistical baselines using " +
+        "subject-level 5-fold cross-validation.",
       links: [],
     },
     {
-      title: "Mild cognitive impairment from naturalistic driving",
-      themes: ["signals", "representation"],
-      status: "Ongoing",
+      title: "Multimodal prognosis for lung adenocarcinoma",
+      themes: ["multimodal", "imaging"],
+      status: "CASI, 2025",
       summary:
-        "Detecting mild cognitive impairment from in-vehicle motion sensors recorded during everyday " +
-        "driving, using time-series foundation models.",
+        "Research design for a framework that combines whole-slide histopathology, genomic sequencing, and " +
+        "clinical records to predict disease progression and treatment response.",
+      result: "",
       details:
-        "Current work reconstructs a missing accelerometer channel from gyroscope and speed signals " +
-        "before classification at the trip and turn level.",
-      links: [],
-    },
-    {
-      title: "Generative trial states for quantum Monte Carlo",
-      themes: ["hpc"],
-      status: "SC 2026 poster",
-      summary:
-        "Using variational (VQE) and generative (GQE) quantum eigensolvers to prepare trial wavefunctions " +
-        "for phaseless auxiliary-field quantum Monte Carlo, and measuring the effect on accuracy and cost.",
-      details:
-        "Work done at NERSC. A follow-up benchmarks VQE, GQE, and their ADAPT variants on stretched " +
-        "hydrogen chains.",
+        "The architecture pairs a CNN with multiple instance learning for whole-slide images and MLP encoders for " +
+        "genomic data, fused at the feature level. I led two graduate and one undergraduate researcher and wrote " +
+        "the 12-month roadmap for a proposed ASU–Caris Life Sciences collaboration.",
       links: [],
     },
   ],
 
   /*
-    Publications, posters, abstracts, and talks.
-    type: "paper" | "poster" | "abstract" | "talk" | "preprint" | "tutorial"
-    Put your name exactly as it appears in "authors"; it is bolded automatically.
+    Publications. Leave empty until papers are out; the section then shows
+    "inPreparation" instead.
+    type: "paper" | "preprint" | "poster" | "abstract" | "talk"
   */
-  meName: "H. Varshan", // TODO: match how your name appears in author lists
+  meName: "H. Varshan",
   publications: [
-    {
-      // TODO: replace with the exact poster title and author list
-      title: "Quantum-prepared trial wavefunctions for phaseless AFQMC",
-      authors: "H. Varshan, et al.",
-      venue: "SC 2026 (Research Poster)",
-      year: 2026,
-      type: "poster",
-      status: "",
-      abstract: "",
-      links: { pdf: "", code: "", doi: "" },
-      bibtex: "",
-    },
-    {
-      // TODO: replace with the exact abstract title and author list
-      title: "Architectural modifications to GQE for trial-state preparation in stretched hydrogen chains",
-      authors: "H. Varshan, et al.",
-      venue: "APS March Meeting",
-      year: 2027,
-      type: "abstract",
-      status: "Submitted",
-      abstract: "",
-      links: {},
-      bibtex: "",
-    },
-    {
-      // TODO: replace with the exact tutorial title and author list
-      title: "HPC tutorial (title to be added)",
-      authors: "H. Varshan, et al.",
-      venue: "SIGCSE Technical Symposium 2027 (Tutorial)",
-      year: 2027,
-      type: "tutorial",
-      status: "Submitted",
-      abstract: "",
-      links: {},
-      bibtex: "",
-    },
+    // Example:
+    // {
+    //   title: "Paper title",
+    //   authors: "H. Varshan, A. Coauthor, T. Wu",
+    //   venue: "Journal or conference",
+    //   year: 2027,
+    //   type: "paper",
+    //   status: "",
+    //   abstract: "",
+    //   links: { pdf: "", code: "", doi: "" },
+    //   bibtex: "",
+    // },
   ],
+  inPreparation:
+    "Manuscripts on amyloid PET harmonization and on multimodal thyroid nodule risk stratification are in " +
+    "preparation. Papers will be listed here once they are published.",
 
-  /*
-    Notes / blog posts. Each post is a Markdown file in /posts.
-    slug must match the file name: posts/<slug>.md
-  */
   posts: [
     {
       slug: "hello-world",
       title: "Why harmonization keeps coming up in my work",
       date: "2026-11-03",
-      summary: "A short note on the common thread between PET scanners, CT protocols, and wearable devices.",
+      summary: "A short note on the common thread between PET tracers, CT cohorts, and wearable devices.",
     },
   ],
 
-  // Teaching, service, awards. Shown as a simple list; newest first.
   experience: [
-    { when: "2026–", what: "HPC Research Intern, NERSC, Lawrence Berkeley National Laboratory" },
-    { when: "2026", what: "Graduate Student Instructor, University of Michigan" }, // TODO: course name and term
+    {
+      when: "2025–now",
+      what: "Graduate Research Associate, Wu Lab, ASU–Mayo Center for Innovative Imaging",
+      detail: "Deep learning pipelines for 3D segmentation, anomaly detection, and multimodal classification across 10,000+ volumes from 9 datasets.",
+    },
+    {
+      when: "2025",
+      what: "AI Research Intern, Complex Adaptive Systems Initiative (CASI), ASU",
+      detail: "Multimodal deep learning for lung adenocarcinoma prognosis, advised by Dr. George Poste.",
+    },
+    {
+      when: "2024–2025",
+      what: "Student Researcher, Meteor Studio Lab, ASU",
+      detail: "VR training simulators and an XR development framework now used in a course of 100+ students each semester.",
+    },
+    {
+      when: "2024",
+      what: "Data Science Intern, DATAD. CO",
+      detail: "Time-series models for underground mining safety risk and an LLM-based retrieval system.",
+    },
+    {
+      when: "2022–2025",
+      what: "Co-Founder, DocYou LLC",
+      detail: "Procedure-logging app for Phoenix Children's Hospital residents; $16,000 raised through pitch competitions.",
+    },
+  ],
+
+  education: [
+    { when: "2025–now", what: "Ph.D. in Computer Science, Arizona State University", detail: "M.S. in Computer Science awarded en route. Advisor: Dr. Teresa Wu." },
+    { when: "2025", what: "B.S. in Computer Science and B.S. in Mathematics, Arizona State University", detail: "Barrett, The Honors College." },
+  ],
+
+  honors: [
+    { when: "2026–now", what: "Reviewer, Journal of Alzheimer's Disease" },
+    { when: "2026", what: "University Graduate Fellowship, Arizona State University" },
+    { when: "2025", what: "Graduate Teaching Associate, Arizona State University" },
+    { when: "2022–2024", what: "Student Mentor, School of Computing and Augmented Intelligence, ASU" },
   ],
 };

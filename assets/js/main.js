@@ -16,6 +16,7 @@
   document.title = SITE.name;
   $("#name").textContent = SITE.name;
   $("#tagline").textContent = SITE.tagline;
+  if (SITE.photo) $("#portrait").src = SITE.photo; else $("#portrait").remove();
   SITE.status.forEach((s) => $("#status").append(el("li", { text: s })));
 
   const L = SITE.links;
@@ -59,6 +60,7 @@
       el("h3", { text: p.title }),
       el("span", { class: "meta", text: p.status || "" }),
       el("p", { text: p.summary }),
+      p.result ? el("p", { class: "result", text: p.result }) : null,
     );
     const more = el("div", { class: "project-more", id, hidden: true });
     if (p.details) more.append(el("p", { text: p.details }));
@@ -162,9 +164,15 @@
     });
   }
 
-  if (usedTypes.length > 1) makeFilters($("#type-filters"), usedTypes, (k) => { typeFilter = k; renderPubs(); });
-  $("#pub-search").addEventListener("input", (e) => { query = e.target.value; renderPubs(); });
-  renderPubs();
+  if (!pubs.length) {
+    $(".pub-controls").remove();
+    $("#pubs").append(el("p", { class: "in-prep", text: SITE.inPreparation || "No publications yet." }));
+  }
+  if (pubs.length && usedTypes.length > 1) makeFilters($("#type-filters"), usedTypes, (k) => { typeFilter = k; renderPubs(); });
+  if (pubs.length) {
+    $("#pub-search").addEventListener("input", (e) => { query = e.target.value; renderPubs(); });
+    renderPubs();
+  }
 
   /* ---------- Notes ---------- */
   const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -177,7 +185,13 @@
   )));
 
   /* ---------- Experience ---------- */
-  SITE.experience.forEach((x) => $("#exp").append(el("dt", { text: x.when }), el("dd", { text: x.what })));
+  const timeline = (sel, items) => (items || []).forEach((x) => $(sel).append(
+    el("dt", { text: x.when }),
+    el("dd", {}, el("span", { class: "exp-what", text: x.what }), x.detail ? el("span", { class: "exp-detail", text: x.detail }) : null),
+  ));
+  timeline("#exp", SITE.experience);
+  timeline("#edu", SITE.education);
+  timeline("#honors", SITE.honors);
 
   /* ---------- Footer ---------- */
   $("#updated").textContent = new Date(document.lastModified).toLocaleDateString("en-US", { year: "numeric", month: "long" });

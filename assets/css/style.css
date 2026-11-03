@@ -136,7 +136,7 @@ a:hover { text-decoration-thickness: 2px; }
 /* ---------- Layout ---------- */
 .layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   padding-top: 1.5rem;
 }
@@ -145,7 +145,7 @@ a:hover { text-decoration-thickness: 2px; }
   .layout { grid-template-columns: 170px minmax(0, 1fr); gap: 4rem; }
 }
 
-.toc { font-size: var(--s-1); }
+.toc { font-size: var(--s-1); min-width: 0; }
 .toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; }
 .toc a { color: var(--muted); text-decoration: none; }
 .toc a:hover, .toc a[aria-current="true"] { color: var(--ink); }
@@ -290,3 +290,74 @@ h2 {
 .post-body pre { background: var(--chip-bg); padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.8rem; }
 .post-body code { font-size: 0.88em; }
 .post-body blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 2px solid var(--trace); color: var(--muted); }
+
+/* ---------- v2: portrait, results, timelines ---------- */
+.hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem 3rem;
+  align-items: end;
+}
+.portrait {
+  width: clamp(150px, 18vw, 220px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  /* sits on the strip's grid like a photo clipped to a chart */
+  margin-bottom: calc(-1 * clamp(2rem, 5vw, 3rem) - 1px);
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--grid-major);
+}
+
+.project-head .result {
+  font-family: var(--sans);
+  font-size: var(--s-1);
+  color: var(--ink);
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--trace);
+  margin-top: 0.6rem;
+}
+
+.in-prep { max-width: var(--measure); margin: 0; }
+
+h3.sub { font-size: var(--s0); font-weight: 600; margin: 2.2rem 0 1rem; }
+
+.exp { grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.9rem 1rem; }
+.exp-what { display: block; }
+.exp-detail { display: block; color: var(--muted); font-size: 0.92em; margin-top: 0.1rem; max-width: var(--measure); }
+
+/* ---------- Phones ---------- */
+@media (max-width: 640px) {
+  .hero-top { grid-template-columns: 1fr; gap: 1.25rem; }
+  .portrait { order: -1; width: 112px; margin-bottom: 0; }
+  .hero .tagline { font-size: 1.15rem; }
+  .strip { margin-top: 1.75rem; }
+  .strip-readout { right: 0.75rem; }
+
+  .links { gap: 0.4rem 1.2rem; }
+  .links a { padding-block: 0.35rem; }
+
+  /* section menu becomes a sticky, swipeable bar */
+  .layout { padding-top: 0; gap: 1rem; }
+  .toc {
+    position: sticky; top: 0; z-index: 5;
+    margin-inline: -1.25rem; padding: 0 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .toc ul { flex-wrap: nowrap; overflow-x: auto; gap: 1.1rem; scrollbar-width: none; flex: 1; }
+  .toc ul::-webkit-scrollbar { display: none; }
+  .toc a { display: block; padding: 0.75rem 0; white-space: nowrap; }
+  .toc a[aria-current="true"] { box-shadow: inset 0 -2px 0 var(--trace); padding-left: 0; }
+  .theme-toggle { margin: 0; white-space: nowrap; padding: 0.75rem 0; }
+
+  section { scroll-margin-top: 3.5rem; }
+  .filters button { padding: 0.45rem 0.9rem; }
+  .project-head h3 { font-size: 1.12rem; }
+  h2 { font-size: 1.55rem; }
+  .exp { grid-template-columns: 1fr; gap: 0.15rem; }
+  .exp dd { margin-bottom: 0.9rem; }
+}

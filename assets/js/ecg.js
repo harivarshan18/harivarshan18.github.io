@@ -1,7 +1,7 @@
 /*
   Hero rhythm strip: a synthetic ECG drawn on chart-paper grid.
   Standard paper: 1 mm minor squares, 5 mm major squares, 25 mm/s, 10 mm/mV.
-  Moving the pointer across the strip sets the heart rate (left slow, right fast).
+  Moving the pointer across (or tapping) the strip sets the heart rate (left slow, right fast).
 */
 (function () {
   const canvas = document.getElementById("ecg");
@@ -166,7 +166,7 @@
   function stop() { running = false; }
 
   // Pointer sets the target rate: 48 bpm at the left edge to 120 bpm at the right.
-  canvas.parentElement.addEventListener("pointermove", (e) => {
+  function setRate(e) {
     const r = canvas.getBoundingClientRect();
     const f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
     targetBpm = 48 + f * 72;
@@ -175,8 +175,10 @@
       if (bpmEl) bpmEl.textContent = Math.round(bpm);
       prefill(); draw();
     }
-  });
-  canvas.parentElement.addEventListener("pointerleave", () => { targetBpm = 64; });
+  }
+  canvas.parentElement.addEventListener("pointermove", setRate);
+  canvas.parentElement.addEventListener("pointerdown", setRate); // taps on phones
+  canvas.parentElement.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") targetBpm = 64; });
 
   new IntersectionObserver((entries) => {
     visible = entries[0].isIntersecting;
