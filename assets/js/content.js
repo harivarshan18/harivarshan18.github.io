@@ -7,9 +7,6 @@
 const SITE = {
   name: "Hari Varshan",
   photo: "assets/img/hari.jpg",
-  tagline:
-    "I develop foundation and generative models for medical imaging and physiological " +
-    "time series, aimed at early detection and precision health.",
   status: [
     "Ph.D. student in Computer Science, Arizona State University",
     "Graduate Research Associate, Wu Lab, ASU–Mayo Center for Innovative Imaging",
