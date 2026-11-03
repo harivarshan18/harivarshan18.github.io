@@ -147,6 +147,13 @@ a:hover { text-decoration-thickness: 2px; }
   font-variant-numeric: tabular-nums;
 }
 
+.strip-hint {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+}
+
 @media (max-width: 900px) and (min-width: 641px) {
   .intro { grid-template-columns: 232px minmax(0, 1fr); gap: 2.25rem; }
 }
