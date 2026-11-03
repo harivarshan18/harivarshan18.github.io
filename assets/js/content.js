@@ -23,7 +23,7 @@ const SITE = {
 
   about: [
     "I am a Ph.D. student in Computer Science (earning a M.S. in Computer Science en route) at Arizona State University, advised by Dr. Teresa Wu " +
-      "in the Wu Lab at the ASU–Mayo Center for Innovative Imaging. I completed my undergratuate" +
+      "in the Wu Lab at the ASU–Mayo Center for Innovative Imaging. I completed my undergratuate " +
       "B.S. degrees in Computer Science and Mathematics from ASU with Barrett, The Honors College.",
     "My research adapts foundation models and generative models to clinical data: 3D medical images, " +
       "radiology reports, and physiological signals from wearables and in-vehicle sensors. I work on " +
