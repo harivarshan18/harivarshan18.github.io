@@ -130,9 +130,12 @@ a:hover { text-decoration-thickness: 2px; }
 
 .strip {
   position: relative;
-  margin: clamp(2.5rem, 6vw, 3.5rem) 0 0;
-  height: clamp(130px, 18vw, 170px);
-  border-block: 1px solid var(--grid-major);
+  margin: 1.5rem 0 0;
+  max-width: var(--measure);
+  height: 150px;
+  border: 1px solid var(--grid-major);
+  border-radius: 6px;
+  overflow: hidden;
   cursor: ew-resize;
   touch-action: pan-y;
 }
