@@ -159,7 +159,7 @@ const SITE = {
     {
       when: "2024–2025",
       what: "Student Researcher, Meteor Studio Lab, ASU",
-      detail: "VR training simulators and an XR development framework now used in a course of 100+ students each semester.",
+      detail: "VR training simulators and an XR development framework now used in a course of 100+ students each semester, advised by Dr. Robert LiKamWa.",
     },
     {
       when: "2024",
