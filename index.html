@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="theme-color" content="#121826">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hari Varshan</title>
   <meta name="description" content="Hari Varshan, Ph.D. student at Arizona State University: foundation and generative models for medical imaging and physiological time series.">
@@ -17,49 +18,44 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <script>
     // Apply saved theme before paint to avoid a flash.
-    try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    let t = "dark"; try { t = localStorage.getItem("theme") || "dark"; } catch (e) {} document.documentElement.dataset.theme = t;
   </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="hero">
-    <div class="hero-top wrap">
-      <div class="hero-text">
-        <h1 id="name"></h1>
-        <p class="tagline" id="tagline"></p>
-        <ul class="status" id="status"></ul>
-      </div>
+  <header class="intro wrap" id="top">
+    <aside class="id-card">
       <img class="portrait" id="portrait" alt="Hari Varshan" width="640" height="640">
+      <h1 id="name"></h1>
+      <ul class="status" id="status"></ul>
+      <ul class="contact" id="links" aria-label="Contact and profiles"></ul>
+    </aside>
+    <div class="bio">
+      <p class="tagline" id="tagline"></p>
+      <div id="about-body" class="prose"></div>
     </div>
-
-    <figure class="strip" aria-label="Animated heart rhythm trace. Move across it to change the rate.">
-      <canvas id="ecg"></canvas>
-      <figcaption class="strip-readout"><span id="bpm">64</span> bpm</figcaption>
-    </figure>
-
-    <nav class="wrap links" id="links" aria-label="Profiles"></nav>
   </header>
+
+  <figure class="strip" aria-label="Animated heart rhythm trace. Move across or tap it to change the rate.">
+    <canvas id="ecg"></canvas>
+    <figcaption class="strip-readout"><span id="bpm">64</span> bpm</figcaption>
+  </figure>
 
   <div class="layout wrap">
     <nav class="toc" aria-label="Sections">
       <ul>
-        <li><a href="#about">About</a></li>
+        <li><a href="#top">About</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#notes">Notes</a></li>
       </ul>
-      <button class="theme-toggle" id="theme-toggle" type="button">Dark mode</button>
+      <button class="theme-toggle" id="theme-toggle" type="button">Light mode</button>
     </nav>
 
     <main id="main">
-      <section id="about">
-        <h2>About</h2>
-        <div id="about-body" class="prose"></div>
-      </section>
-
       <section id="research">
         <h2>Research</h2>
         <div class="filters" id="theme-filters" role="group" aria-label="Filter projects by theme"></div>

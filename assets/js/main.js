@@ -20,17 +20,29 @@
   SITE.status.forEach((s) => $("#status").append(el("li", { text: s })));
 
   const L = SITE.links;
+  const svg = (d, vb = "0 0 24 24", fill = false) =>
+    `<svg viewBox="${vb}" aria-hidden="true" ${fill ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'}>${d}</svg>`;
+  const ICONS = {
+    email: svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/>'),
+    cv: svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>'),
+    github: svg('<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>', "0 0 16 16", true),
+    linkedin: svg('<rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M8 10.5V16M8 7.6v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6V16"/>'),
+    scholar: svg('<path d="M2 9.5 12 4l10 5.5L12 15z"/><path d="M6 11.7V16c0 1.3 2.7 3 6 3s6-1.7 6-3v-4.3"/>'),
+    orcid: svg('<circle cx="12" cy="12" r="9"/><path d="M9 10.5V16M9 8v.1M12.5 16V8h1.8a4 4 0 0 1 0 8z"/>'),
+  };
   const linkDefs = [
-    ["CV", L.cv],
-    ["Email", L.email && "mailto:" + L.email],
-    ["GitHub", L.github],
-    ["Google Scholar", L.scholar],
-    ["LinkedIn", L.linkedin],
-    ["ORCID", L.orcid],
+    ["email", L.email, L.email && "mailto:" + L.email],
+    ["linkedin", "LinkedIn", L.linkedin],
+    ["github", "GitHub", L.github],
+    ["scholar", "Google Scholar", L.scholar],
+    ["orcid", "ORCID", L.orcid],
+    ["cv", "Curriculum vitae", L.cv],
   ];
-  linkDefs.filter(([, href]) => href).forEach(([label, href]) => {
+  linkDefs.filter(([, , href]) => href).forEach(([key, label, href]) => {
     const ext = /^https?:/.test(href);
-    $("#links").append(el("a", { href, text: label, target: ext ? "_blank" : null, rel: ext ? "noopener" : null }));
+    const a = el("a", { href, target: ext ? "_blank" : null, rel: ext ? "noopener" : null, html: ICONS[key] });
+    a.append(el("span", { text: label }));
+    $("#links").append(el("li", {}, a));
   });
 
   /* ---------- About ---------- */
@@ -199,7 +211,7 @@
   /* ---------- Theme toggle ---------- */
   const root = document.documentElement;
   const sysDark = window.matchMedia("(prefers-color-scheme: dark)");
-  const isDark = () => root.dataset.theme ? root.dataset.theme === "dark" : sysDark.matches;
+  const isDark = () => root.dataset.theme !== "light";
   const btn = $("#theme-toggle");
   const label = () => (btn.textContent = isDark() ? "Light mode" : "Dark mode");
   btn.addEventListener("click", () => {
@@ -219,5 +231,5 @@
       navLinks.forEach((a) => a.setAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id ? "true" : "false"));
     });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  document.querySelectorAll("main section").forEach((s) => obs.observe(s));
+  document.querySelectorAll("#top, main section").forEach((s) => obs.observe(s));
 })();

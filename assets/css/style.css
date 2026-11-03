@@ -1,14 +1,15 @@
 /* ---------- Tokens ---------- */
+/* Dark is the default; [data-theme="light"] switches to chart-paper white. */
 :root {
-  --paper: #fcfcfa;
-  --ink: #18202e;
-  --muted: #5d6677;
-  --rule: #e3e5ea;
-  --grid-minor: #f7e3e6;
-  --grid-major: #efc4cb;
-  --trace: #c21f3a;
-  --link: #1d4f7a;
-  --chip-bg: #eef0f4;
+  --paper: #121826;
+  --ink: #e6e9f0;
+  --muted: #9aa3b5;
+  --rule: #273046;
+  --grid-minor: #1a2133;
+  --grid-major: #2a3450;
+  --trace: #ff6b81;
+  --link: #8ec5ff;
+  --chip-bg: #1e2638;
 
   --sans: "Schibsted Grotesk", system-ui, sans-serif;
   --serif: "Source Serif 4", Georgia, serif;
@@ -21,35 +22,20 @@
   --s4: 3.157rem;
 
   --measure: 68ch;
-  color-scheme: light;
-}
-
-:root[data-theme="dark"] {
-  --paper: #121826;
-  --ink: #e6e9f0;
-  --muted: #9aa3b5;
-  --rule: #273046;
-  --grid-minor: #1a2133;
-  --grid-major: #2a3450;
-  --trace: #ff6b81;
-  --link: #8ec5ff;
-  --chip-bg: #1e2638;
   color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #121826;
-    --ink: #e6e9f0;
-    --muted: #9aa3b5;
-    --rule: #273046;
-    --grid-minor: #1a2133;
-    --grid-major: #2a3450;
-    --trace: #ff6b81;
-    --link: #8ec5ff;
-    --chip-bg: #1e2638;
-    color-scheme: dark;
-  }
+:root[data-theme="light"] {
+  --paper: #fcfcfa;
+  --ink: #18202e;
+  --muted: #5d6677;
+  --rule: #e3e5ea;
+  --grid-minor: #f7e3e6;
+  --grid-major: #efc4cb;
+  --trace: #c21f3a;
+  --link: #1d4f7a;
+  --chip-bg: #eef0f4;
+  color-scheme: light;
 }
 
 /* ---------- Base ---------- */
@@ -87,33 +73,65 @@ a:hover { text-decoration-thickness: 2px; }
   position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
-/* ---------- Hero ---------- */
-.hero { padding-top: clamp(2.5rem, 8vw, 5rem); }
-
-.hero h1 {
-  font-size: clamp(2.4rem, 7vw, var(--s4));
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.02;
-  margin: 0 0 1rem;
+/* ---------- Intro: photo, name and links left; bio right ---------- */
+.intro {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+  padding-top: clamp(2.5rem, 7vw, 4.5rem);
 }
 
-.tagline {
-  font-size: var(--s1);
-  line-height: 1.45;
-  max-width: 40ch;
-  margin: 0 0 1.25rem;
+.id-card { font-family: var(--sans); }
+
+.portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--grid-major);
+}
+
+.id-card h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 1.1rem 0 0.5rem;
 }
 
 .status {
   list-style: none; padding: 0; margin: 0;
-  color: var(--muted); font-size: var(--s-1); line-height: 1.7;
+  color: var(--muted); font-size: var(--s-1); line-height: 1.5;
+}
+.status li + li { margin-top: 0.35rem; }
+
+.contact { list-style: none; padding: 0; margin: 1.25rem 0 0; font-size: var(--s-1); }
+.contact li + li { margin-top: 0.15rem; }
+.contact a {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.2rem 0;
+  color: var(--ink); text-decoration: none;
+  overflow-wrap: normal; white-space: nowrap;
+}
+.contact a:hover span { text-decoration: underline; text-underline-offset: 0.18em; }
+.contact svg { width: 17px; height: 17px; flex: none; color: var(--trace); }
+
+.bio { padding-top: 0.2rem; }
+.tagline {
+  font-family: var(--serif);
+  font-size: var(--s1);
+  line-height: 1.45;
+  max-width: 34ch;
+  margin: 0 0 1.75rem;
 }
 
 .strip {
   position: relative;
-  margin: clamp(2rem, 5vw, 3rem) 0 0;
-  height: clamp(140px, 22vw, 200px);
+  margin: clamp(2.5rem, 6vw, 3.5rem) 0 0;
+  height: clamp(130px, 18vw, 170px);
   border-block: 1px solid var(--grid-major);
   cursor: ew-resize;
   touch-action: pan-y;
@@ -126,12 +144,9 @@ a:hover { text-decoration-thickness: 2px; }
   font-variant-numeric: tabular-nums;
 }
 
-.links {
-  display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem;
-  padding-block: 1.1rem;
-  font-size: var(--s-1);
+@media (max-width: 900px) and (min-width: 641px) {
+  .intro { grid-template-columns: 232px minmax(0, 1fr); gap: 2.25rem; }
 }
-.links a { color: var(--ink); font-weight: 500; }
 
 /* ---------- Layout ---------- */
 .layout {
@@ -291,26 +306,7 @@ h2 {
 .post-body code { font-size: 0.88em; }
 .post-body blockquote { margin: 1.5rem 0; padding-left: 1rem; border-left: 2px solid var(--trace); color: var(--muted); }
 
-/* ---------- v2: portrait, results, timelines ---------- */
-.hero-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2rem 3rem;
-  align-items: end;
-}
-.portrait {
-  width: clamp(150px, 18vw, 220px);
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 6px;
-  /* sits on the strip's grid like a photo clipped to a chart */
-  margin-bottom: calc(-1 * clamp(2rem, 5vw, 3rem) - 1px);
-  position: relative;
-  z-index: 1;
-  border: 1px solid var(--grid-major);
-}
-
+/* ---------- Results, timelines ---------- */
 .project-head .result {
   font-family: var(--sans);
   font-size: var(--s-1);
@@ -330,14 +326,16 @@ h3.sub { font-size: var(--s0); font-weight: 600; margin: 2.2rem 0 1rem; }
 
 /* ---------- Phones ---------- */
 @media (max-width: 640px) {
-  .hero-top { grid-template-columns: 1fr; gap: 1.25rem; }
-  .portrait { order: -1; width: 112px; margin-bottom: 0; }
-  .hero .tagline { font-size: 1.15rem; }
-  .strip { margin-top: 1.75rem; }
+  .intro { grid-template-columns: 1fr; gap: 1.75rem; padding-top: 2rem; }
+  .id-card { display: grid; grid-template-columns: 96px 1fr; column-gap: 1rem; align-items: start; }
+  .portrait { grid-row: span 2; }
+  .id-card h1 { margin: 0.1rem 0 0.35rem; font-size: 1.6rem; }
+  .contact { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.2rem 1.2rem; }
+  .contact li + li { margin-top: 0; }
+  .contact a { padding: 0.35rem 0; }
+  .tagline { font-size: 1.15rem; }
+  .strip { margin-top: 1.5rem; }
   .strip-readout { right: 0.75rem; }
-
-  .links { gap: 0.4rem 1.2rem; }
-  .links a { padding-block: 0.35rem; }
 
   /* section menu becomes a sticky, swipeable bar */
   .layout { padding-top: 0; gap: 1rem; }
