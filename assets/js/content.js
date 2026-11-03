@@ -18,7 +18,7 @@ const SITE = {
     linkedin: "https://www.linkedin.com/in/hari-varshan-d",
     scholar: "https://scholar.google.com/citations?user=c0R_YdsAAAAJ&hl=en&authuser=1", 
     orcid: "",
-    cv: "assets/cv.pdf",
+    cv: "assets/Hari_Varshan_CV.pdf",
   },
 
   about: [
