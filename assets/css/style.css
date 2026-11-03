@@ -119,7 +119,7 @@ a:hover { text-decoration-thickness: 2px; }
 .contact a:hover span { text-decoration: underline; text-underline-offset: 0.18em; }
 .contact svg { width: 17px; height: 17px; flex: none; color: var(--trace); }
 
-.bio { padding-top: 0.2rem; }
+.bio { margin-top: -0.45rem; }
 .tagline {
   font-family: var(--serif);
   font-size: var(--s1);
