@@ -23,12 +23,12 @@ const SITE = {
 
   about: [
     "I am a Ph.D. student in Computer Science at Arizona State University, advised by Dr. Teresa Wu " +
-      "in the Wu Lab at the ASU–Mayo Center for Innovative Imaging. I earned an M.S. in Computer Science " +
+      "in the Wu Lab at the ASU–Mayo Center for Innovative Imaging. I will earn an M.S. in Computer Science " +
       "en route, and B.S. degrees in Computer Science and Mathematics from ASU with Barrett, The Honors College.",
     "My research adapts foundation models and generative models to clinical data: 3D medical images, " +
       "radiology reports, and physiological signals from wearables and in-vehicle sensors. I work on " +
       "harmonizing data across scanners and tracers, multimodal risk prediction, and early detection " +
-      "of conditions such as mild cognitive impairment.",
+      "of conditions such as mild cognitive impairment and cancer.",
     "Application areas include neuroimaging, computational oncology, and wearable health. " +
       "I train models at scale with multi-GPU distributed training on SLURM clusters.",
   ],
